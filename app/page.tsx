@@ -1,51 +1,37 @@
 import Link from "next/link";
 import { MessageSquare, FileText, Code, Zap, Shield, BarChart2 } from "lucide-react";
+import Navbar from "@/components/layout/Navbar";
 
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-white text-gray-900">
 
-      {/* Nav */}
-      <nav className="border-b px-6 py-4 flex items-center justify-between max-w-6xl mx-auto">
-        <span className="text-xl font-bold text-blue-600">Chatyy</span>
-        <div className="flex items-center gap-4">
-          <a href="#features" className="text-sm text-gray-600 hover:text-gray-900">Features</a>
-          <a href="#how-it-works" className="text-sm text-gray-600 hover:text-gray-900">How it works</a>
-          <a href="#pricing" className="text-sm text-gray-600 hover:text-gray-900">Pricing</a>
-          <Link href="/login" className="text-sm text-gray-600 hover:text-gray-900">Sign in</Link>
-          <Link
-            href="/signup"
-            className="bg-blue-600 text-white text-sm px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition"
-          >
-            Get started free
-          </Link>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* Hero */}
-      <section className="max-w-4xl mx-auto px-6 py-28 text-center">
+      <section className="max-w-4xl mx-auto px-6 py-16 md:py-28 text-center">
         <span className="inline-block bg-blue-50 text-blue-600 text-xs font-semibold px-3 py-1 rounded-full mb-6 uppercase tracking-wide">
           AI-powered customer support
         </span>
-        <h1 className="text-5xl font-extrabold leading-tight tracking-tight mb-6">
+        <h1 className="text-4xl md:text-5xl font-extrabold leading-tight tracking-tight mb-6">
           A chatbot trained on{" "}
-          <span className="text-blue-600">your documents</span>,<br />
+          <span className="text-blue-600">your documents</span>,{" "}
           ready in minutes
         </h1>
-        <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-10 leading-relaxed">
+        <p className="text-base md:text-xl text-gray-500 max-w-2xl mx-auto mb-10 leading-relaxed">
           Upload your docs, customize your bot, and embed it on your website with one line of code.
           Your customers get instant, accurate answers — 24/7.
         </p>
-        <div className="flex items-center justify-center gap-4">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link
             href="/signup"
-            className="bg-blue-600 text-white px-8 py-3.5 rounded-xl font-semibold text-base hover:bg-blue-700 transition shadow-lg shadow-blue-200"
+            className="w-full sm:w-auto bg-blue-600 text-white px-8 py-3.5 rounded-xl font-semibold text-base hover:bg-blue-700 transition shadow-lg shadow-blue-200"
           >
             Start for free
           </Link>
           <Link
             href="/login"
-            className="border border-gray-200 text-gray-700 px-8 py-3.5 rounded-xl font-semibold text-base hover:bg-gray-50 transition"
+            className="w-full sm:w-auto border border-gray-200 text-gray-700 px-8 py-3.5 rounded-xl font-semibold text-base hover:bg-gray-50 transition"
           >
             Sign in
           </Link>
@@ -122,7 +108,7 @@ export default function LandingPage() {
         <div className="max-w-5xl mx-auto px-6">
           <h2 className="text-3xl font-bold text-center mb-4">Everything you need</h2>
           <p className="text-center text-gray-500 mb-14">Set up in minutes, not months.</p>
-          <div className="grid grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
                 icon: FileText,
@@ -151,7 +137,7 @@ export default function LandingPage() {
               {
                 icon: Shield,
                 title: "Private & secure by design",
-                desc: "Each company's documents and conversations are fully isolated — no data is ever shared between accounts. Your files are stored encrypted, never used to train AI models, and only accessible to you.",
+                desc: "Your data is encrypted, isolated, and never used to train AI models.",
                 color: "bg-red-50 text-red-600",
               },
               {
@@ -211,7 +197,7 @@ export default function LandingPage() {
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h2 className="text-3xl font-bold mb-4">Simple pricing</h2>
           <p className="text-gray-500 mb-14">Start free. Upgrade when you're ready.</p>
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Free */}
             <div className="bg-white rounded-2xl border p-8 text-left shadow-sm">
               <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">Free</p>
@@ -283,8 +269,8 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t px-6 py-8 text-center text-sm text-gray-400">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
+      <footer className="border-t px-6 py-8 text-sm text-gray-400">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-center">
           <span className="font-bold text-blue-600">Chatyy</span>
           <p>© {new Date().getFullYear()} Chatyy. All rights reserved.</p>
           <div className="flex gap-4">
