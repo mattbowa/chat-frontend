@@ -30,7 +30,7 @@ export default function AnalyticsPage() {
     <div className="max-w-3xl mx-auto py-10 px-4 space-y-8">
       <h1 className="text-2xl font-bold">Analytics</h1>
 
-      {/* Stat cards */}
+      {/* Stat cards  */}
       <div className="grid grid-cols-3 gap-4">
         {[
           { label: "Messages this month", value: data.messages_this_month, icon: MessageSquare, color: "text-blue-600" },
