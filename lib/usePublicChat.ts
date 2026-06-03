@@ -8,7 +8,7 @@ export type Message = {
   sources?: Array<{ content: string; document_id: string; chunk_index: number }>;
 };
 
-export function usePublicChat(slug: string, sessionId: string) {
+export function usePublicChat(slug: string, sessionId: string, visitorEmail: string | null) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [streaming, setStreaming] = useState(false);
 
@@ -21,7 +21,7 @@ export function usePublicChat(slug: string, sessionId: string) {
       const res = await fetch(`${apiBase}/public/chat/${slug}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ session_id: sessionId, message: userMessage }),
+        body: JSON.stringify({ session_id: sessionId, message: userMessage, visitor_email: visitorEmail }),
       });
 
       const reader = res.body!.getReader();
@@ -64,7 +64,7 @@ export function usePublicChat(slug: string, sessionId: string) {
 
       setStreaming(false);
     },
-    [slug, sessionId]
+    [slug, sessionId, visitorEmail]
   );
 
   return { messages, streaming, sendMessage };
