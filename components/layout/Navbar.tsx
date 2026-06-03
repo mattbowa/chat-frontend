@@ -10,7 +10,7 @@ export default function Navbar() {
   return (
     <nav className="border-b bg-white max-w-6xl mx-auto px-6 py-4">
       <div className="flex items-center justify-between">
-        <span className="text-xl font-bold text-blue-600">Chatyy</span>
+        <span className="text-xl font-bold text-blue-600">Zebboy</span>
 
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-4">

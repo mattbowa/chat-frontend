@@ -30,7 +30,7 @@ export default function SignupPage() {
     try {
       const { data } = await register(form);
       localStorage.setItem("token", data.access_token);
-      toast("Account created! Welcome to Chatyy.", "success");
+      toast("Account created! Welcome to Zebboy.", "success");
       router.push("/documents");
     } catch (err: unknown) {
       const msg = (err as { response?: { data?: { detail?: string } } })?.response?.data?.detail;
@@ -44,7 +44,7 @@ export default function SignupPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <a href="/" className="text-2xl font-bold text-blue-600">Chatyy</a>
+          <a href="/" className="text-2xl font-bold text-blue-600">Zebboy</a>
           <p className="text-gray-500 text-sm mt-1">Create your free account</p>
         </div>
         <form onSubmit={handleSubmit} className="bg-white p-8 rounded-2xl shadow-sm border space-y-4">
@@ -52,7 +52,7 @@ export default function SignupPage() {
             <label className="block text-sm font-medium mb-1">Company name</label>
             <input
               type="text"
-              placeholder="Acme Corp"
+              placeholder="Your company"
               value={form.tenant_name}
               onChange={handleNameChange}
               required
@@ -62,7 +62,7 @@ export default function SignupPage() {
           <div>
             <label className="block text-sm font-medium mb-1">URL slug</label>
             <div className="flex items-center border rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-blue-500">
-              <span className="bg-gray-50 px-3 py-2 text-sm text-gray-400 border-r">chatyy.com/widget/</span>
+              <span className="bg-gray-50 px-3 py-2 text-sm text-gray-400 border-r">zebboy.com/widget/</span>
               <input
                 type="text"
                 value={form.tenant_slug}

@@ -28,8 +28,8 @@ export default function Toaster() {
       setToasts((prev) => [...prev, { id, message, type }]);
       setTimeout(() => setToasts((prev) => prev.filter((t) => t.id !== id)), 4000);
     };
-    window.addEventListener("chatyy-toast", handler);
-    return () => window.removeEventListener("chatyy-toast", handler);
+    window.addEventListener("zebboy-toast", handler);
+    return () => window.removeEventListener("zebboy-toast", handler);
   }, []);
 
   if (toasts.length === 0) return null;

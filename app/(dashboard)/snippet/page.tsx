@@ -20,9 +20,9 @@ export default function SnippetPage() {
 
   if (!slug) return <div className="p-10 text-gray-400 text-sm">Loading...</div>;
 
-  const scriptSnippet = `<script src="https://chatyy.com/widget.js" data-slug="${slug}" defer></script>`;
+  const scriptSnippet = `<script src="https://zebboy.com/widget.js" data-slug="${slug}" defer></script>`;
   const iframeSnippet = `<iframe
-  src="https://chatyy.com/widget/${slug}"
+  src="https://zebboy.com/widget/${slug}"
   width="400"
   height="600"
   frameborder="0"
@@ -85,7 +85,7 @@ export default function SnippetPage() {
       <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm text-blue-700">
         Your chatbot slug is <strong>{slug}</strong>. Your widget is live at{" "}
         <code className="bg-blue-100 px-1 rounded">
-          https://chatyy.com/widget/{slug}
+          https://zebboy.com/widget/{slug}
         </code>
       </div>
     </div>

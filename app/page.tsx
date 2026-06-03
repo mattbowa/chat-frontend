@@ -237,7 +237,7 @@ export default function LandingPage() {
                   "2,000 messages / month",
                   "Unlimited documents",
                   "Multiple chatbots",
-                  "Remove Chatyy branding",
+                  "Remove Zebboy branding",
                   "Priority support",
                 ].map((f) => (
                   <li key={f} className="flex items-center gap-2">
@@ -271,8 +271,8 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="border-t px-6 py-8 text-sm text-gray-400">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-center">
-          <span className="font-bold text-blue-600">Chatyy</span>
-          <p>© {new Date().getFullYear()} Chatyy. All rights reserved.</p>
+          <span className="font-bold text-blue-600">Zebboy</span>
+          <p>© {new Date().getFullYear()} Zebboy. All rights reserved.</p>
           <div className="flex gap-4">
             <Link href="/login" className="hover:text-gray-600">Sign in</Link>
             <Link href="/signup" className="hover:text-gray-600">Sign up</Link>

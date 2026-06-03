@@ -7,7 +7,7 @@ import ReactMarkdown from "react-markdown";
 import { Send } from "lucide-react";
 
 function getSessionId() {
-  const key = "chatyy_preview_session";
+  const key = "zebboy_preview_session";
   let id = sessionStorage.getItem(key);
   if (!id) { id = crypto.randomUUID(); sessionStorage.setItem(key, id); }
   return id;
@@ -42,7 +42,7 @@ export default function ChatPreviewPage() {
           <p className="text-sm text-gray-500">Previewing exactly what your end-users see.</p>
         </div>
         <button
-          onClick={() => { sessionStorage.removeItem("chatyy_preview_session"); window.location.reload(); }}
+          onClick={() => { sessionStorage.removeItem("zebboy_preview_session"); window.location.reload(); }}
           className="text-xs text-gray-400 hover:text-gray-600 border rounded px-2 py-1"
         >
           New conversation

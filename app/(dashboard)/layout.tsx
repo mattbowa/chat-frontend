@@ -49,7 +49,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <button onClick={() => setSidebarOpen(true)}>
             <Menu size={20} className="text-gray-600" />
           </button>
-          <span className="text-base font-bold text-blue-600">Chatyy</span>
+          <span className="text-base font-bold text-blue-600">Zebboy</span>
         </div>
         <main className="flex-1 overflow-y-auto">{children}</main>
       </div>

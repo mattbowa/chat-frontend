@@ -39,7 +39,7 @@ export default function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
           className="text-xl font-bold tracking-tight text-blue-600 hover:text-blue-700"
           onClick={onNavigate}
         >
-          Chatyy
+          Zebboy
         </Link>
       </div>
 

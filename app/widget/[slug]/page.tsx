@@ -7,7 +7,7 @@ import { usePublicChat } from "@/lib/usePublicChat";
 import { Send, Moon, Sun } from "lucide-react";
 
 function getOrCreateSessionId(): string {
-  const key = "chatyy_session_id";
+  const key = "zebboy_session_id";
   let id = sessionStorage.getItem(key);
   if (!id) {
     id = crypto.randomUUID();
@@ -123,7 +123,7 @@ export default function WidgetPage() {
 
       {/* Powered by */}
       <div className="text-center py-1.5 text-xs text-gray-400 bg-white border-t">
-        Powered by <span className="font-medium text-blue-500">Chatyy</span>
+        Powered by <span className="font-medium text-blue-500">Zebboy</span>
       </div>
     </div>
   );
