@@ -83,17 +83,17 @@ export default function AnalyticsPage() {
       {data.daily_messages.length > 0 && (
         <div className="bg-white rounded-xl shadow p-6 space-y-3">
           <h2 className="font-semibold">Messages per day (last 30 days)</h2>
-          <div className="flex items-end gap-1 h-24">
+          <div className="flex items-end gap-[3px] h-24 overflow-x-auto pb-1">
             {data.daily_messages.map((d) => {
               const max = Math.max(...data.daily_messages.map((x) => x.count));
-              const h = max > 0 ? Math.round((d.count / max) * 96) : 4;
+              const h = max > 0 ? Math.max(4, Math.round((d.count / max) * 88)) : 4;
               return (
-                <div key={d.date} className="flex-1 flex flex-col items-center gap-1 group relative">
+                <div key={d.date} className="flex-shrink-0 w-4 flex flex-col items-center group relative">
                   <div
                     className="w-full bg-blue-400 rounded-t hover:bg-blue-600 transition-colors"
                     style={{ height: `${h}px` }}
                   />
-                  <span className="absolute -top-5 text-xs bg-gray-800 text-white px-1 rounded opacity-0 group-hover:opacity-100 whitespace-nowrap">
+                  <span className="absolute -top-6 text-xs bg-gray-800 text-white px-1 rounded opacity-0 group-hover:opacity-100 whitespace-nowrap z-10">
                     {d.count} on {d.date}
                   </span>
                 </div>
