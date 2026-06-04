@@ -21,7 +21,7 @@ export default function ChatPreviewPage() {
     getMe().then(({ data }) => setSlug(data.tenant_slug));
   }, []);
 
-  const { messages, streaming, sendMessage } = usePublicChat(slug ?? "", sessionId);
+  const { messages, streaming, sendMessage } = usePublicChat(slug ?? "", sessionId, null);
   const [input, setInput] = useState("");
 
   const submit = async (e: React.FormEvent) => {
