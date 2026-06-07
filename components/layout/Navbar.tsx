@@ -14,9 +14,6 @@ export default function Navbar() {
 
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-4">
-          <a href="#features" className="text-sm text-gray-600 hover:text-gray-900">Features</a>
-          <a href="#how-it-works" className="text-sm text-gray-600 hover:text-gray-900">How it works</a>
-          <a href="#pricing" className="text-sm text-gray-600 hover:text-gray-900">Pricing</a>
           <Link href="/blog" className="text-sm text-gray-600 hover:text-gray-900">Blog</Link>
           <Link href="/login" className="text-sm text-gray-600 hover:text-gray-900">Sign in</Link>
           <Link
@@ -48,27 +45,6 @@ export default function Navbar() {
       {/* Mobile dropdown */}
       {open && (
         <div className="md:hidden mt-3 pb-2 flex flex-col gap-1 border-t pt-3">
-          <a
-            href="#features"
-            onClick={() => setOpen(false)}
-            className="text-sm text-gray-600 hover:text-gray-900 py-2"
-          >
-            Features
-          </a>
-          <a
-            href="#how-it-works"
-            onClick={() => setOpen(false)}
-            className="text-sm text-gray-600 hover:text-gray-900 py-2"
-          >
-            How it works
-          </a>
-          <a
-            href="#pricing"
-            onClick={() => setOpen(false)}
-            className="text-sm text-gray-600 hover:text-gray-900 py-2"
-          >
-            Pricing
-          </a>
           <Link
             href="/blog"
             onClick={() => setOpen(false)}
