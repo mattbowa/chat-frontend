@@ -1,10 +1,54 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { MessageSquare, FileText, Code, Zap, Shield, BarChart2 } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 
+export const metadata: Metadata = {
+  alternates: { canonical: "https://zebboy.com" },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Zebboy",
+  applicationCategory: "BusinessApplication",
+  operatingSystem: "Web",
+  url: "https://zebboy.com",
+  description:
+    "AI chatbot builder that lets you upload your documents and embed a fully trained customer support bot on your website in minutes.",
+  offers: [
+    {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+      name: "Free plan",
+      description: "100 messages/month, up to 10 documents, 1 chatbot widget",
+    },
+    {
+      "@type": "Offer",
+      price: "29",
+      priceCurrency: "USD",
+      name: "Pro plan",
+      description: "2,000 messages/month, unlimited documents, multiple chatbots",
+    },
+  ],
+  featureList: [
+    "Upload PDF, Word, and text documents",
+    "AI answers grounded in your content",
+    "One-line embed code",
+    "Streaming responses",
+    "Private and secure data handling",
+    "Usage analytics dashboard",
+  ],
+};
+
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-white text-gray-900">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
       <Navbar />
 
