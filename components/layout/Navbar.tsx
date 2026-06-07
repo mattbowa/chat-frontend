@@ -17,6 +17,7 @@ export default function Navbar() {
           <a href="#features" className="text-sm text-gray-600 hover:text-gray-900">Features</a>
           <a href="#how-it-works" className="text-sm text-gray-600 hover:text-gray-900">How it works</a>
           <a href="#pricing" className="text-sm text-gray-600 hover:text-gray-900">Pricing</a>
+          <Link href="/blog" className="text-sm text-gray-600 hover:text-gray-900">Blog</Link>
           <Link href="/login" className="text-sm text-gray-600 hover:text-gray-900">Sign in</Link>
           <Link
             href="/signup"
@@ -68,6 +69,13 @@ export default function Navbar() {
           >
             Pricing
           </a>
+          <Link
+            href="/blog"
+            onClick={() => setOpen(false)}
+            className="text-sm text-gray-600 hover:text-gray-900 py-2"
+          >
+            Blog
+          </Link>
           <Link
             href="/login"
             onClick={() => setOpen(false)}
