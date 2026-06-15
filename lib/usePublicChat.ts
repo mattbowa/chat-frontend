@@ -6,6 +6,7 @@ export type Message = {
   role: "user" | "assistant";
   content: string;
   sources?: Array<{ content: string; document_id: string; chunk_index: number }>;
+  suggested_questions?: string[];
 };
 
 export function usePublicChat(slug: string, sessionId: string, visitorEmail: string | null) {
@@ -55,6 +56,7 @@ export function usePublicChat(slug: string, sessionId: string, visitorEmail: str
                 role: "assistant",
                 content: assistantContent,
                 sources: data.sources,
+                suggested_questions: data.suggested_questions ?? [],
               };
               return next;
             });

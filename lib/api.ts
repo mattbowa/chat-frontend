@@ -42,6 +42,11 @@ export const updateSettings = (data: Partial<{
   temperature: number;
   top_k_chunks: number;
   max_response_tokens: number;
+  fallback_message: string;
+  suggested_questions: string[];
+  bot_name: string;
+  primary_color: string;
+  logo_url: string | null;
 }>) => api.patch("/settings", data);
 
 // Analytics

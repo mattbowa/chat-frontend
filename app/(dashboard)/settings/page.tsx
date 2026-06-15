@@ -9,6 +9,8 @@ type Settings = {
   temperature: number;
   top_k_chunks: number;
   max_response_tokens: number;
+  fallback_message: string;
+  suggested_questions: string[];
   bot_name: string;
   primary_color: string;
   logo_url: string | null;
@@ -20,6 +22,7 @@ export default function SettingsPage() {
   const [settings, setSettings] = useState<Settings | null>(null);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [newQuestion, setNewQuestion] = useState("");
 
   useEffect(() => {
     getSettings().then(({ data }) => setSettings(data));
@@ -104,6 +107,70 @@ export default function SettingsPage() {
             onChange={(e) => setSettings({ ...settings, system_prompt: e.target.value })}
             className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
           />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1">Fallback message</label>
+          <p className="text-xs text-gray-400 mb-2">Shown when the bot can't find relevant information.</p>
+          <textarea
+            rows={2}
+            value={settings.fallback_message}
+            onChange={(e) => setSettings({ ...settings, fallback_message: e.target.value })}
+            className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1">Suggested questions</label>
+          <p className="text-xs text-gray-400 mb-2">Clickable prompts shown in the widget when no answer is found (or on first open).</p>
+          <div className="flex flex-wrap gap-2 mb-2">
+            {settings.suggested_questions.map((q, i) => (
+              <span
+                key={i}
+                className="flex items-center gap-1 bg-blue-50 text-blue-700 text-xs px-2 py-1 rounded-full border border-blue-200"
+              >
+                {q}
+                <button
+                  type="button"
+                  onClick={() => setSettings({
+                    ...settings,
+                    suggested_questions: settings.suggested_questions.filter((_, idx) => idx !== i),
+                  })}
+                  className="ml-0.5 text-blue-400 hover:text-red-500 font-bold"
+                >
+                  ×
+                </button>
+              </span>
+            ))}
+          </div>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={newQuestion}
+              onChange={(e) => setNewQuestion(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && newQuestion.trim()) {
+                  e.preventDefault();
+                  setSettings({ ...settings, suggested_questions: [...settings.suggested_questions, newQuestion.trim()] });
+                  setNewQuestion("");
+                }
+              }}
+              placeholder="Type a question and press Enter"
+              className="flex-1 border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <button
+              type="button"
+              onClick={() => {
+                if (newQuestion.trim()) {
+                  setSettings({ ...settings, suggested_questions: [...settings.suggested_questions, newQuestion.trim()] });
+                  setNewQuestion("");
+                }
+              }}
+              className="bg-blue-100 text-blue-700 px-3 py-2 rounded-lg text-sm font-medium hover:bg-blue-200 transition"
+            >
+              Add
+            </button>
+          </div>
         </div>
 
         <div className="grid grid-cols-2 gap-4">

@@ -24,30 +24,31 @@ function storeEmail(email: string): void {
   sessionStorage.setItem("zebboy_visitor_email", email);
 }
 
-type Branding = { bot_name: string; primary_color: string; logo_url: string | null };
+type Branding = { bot_name: string; primary_color: string; logo_url: string | null; suggested_questions: string[] };
 
 export default function WidgetPage() {
   const { slug } = useParams<{ slug: string }>();
   const searchParams = useSearchParams();
-  const [sessionId] = useState(() =>
-    typeof window !== "undefined" ? getOrCreateSessionId() : crypto.randomUUID()
-  );
-  const [visitorEmail, setVisitorEmail] = useState<string | null>(() =>
-    typeof window !== "undefined" ? getStoredEmail() : null
-  );
+  const [sessionId, setSessionId] = useState<string>("");
+  const [visitorEmail, setVisitorEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    setSessionId(getOrCreateSessionId());
+    setVisitorEmail(getStoredEmail());
+  }, []);
   const [emailInput, setEmailInput] = useState("");
   const [emailError, setEmailError] = useState("");
   const { messages, streaming, sendMessage } = usePublicChat(slug, sessionId, visitorEmail);
   const [input, setInput] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
-  const [branding, setBranding] = useState<Branding>({ bot_name: "AI Assistant", primary_color: "#2563eb", logo_url: null });
+  const [branding, setBranding] = useState<Branding>({ bot_name: "AI Assistant", primary_color: "#2563eb", logo_url: null, suggested_questions: [] });
   const [dark, setDark] = useState(searchParams.get("theme") === "dark");
 
   useEffect(() => {
     const apiBase = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
     fetch(`${apiBase}/public/settings/${slug}`)
       .then((r) => r.json())
-      .then((d) => setBranding({ bot_name: d.bot_name, primary_color: d.primary_color, logo_url: d.logo_url }))
+      .then((d) => setBranding({ bot_name: d.bot_name, primary_color: d.primary_color, logo_url: d.logo_url, suggested_questions: d.suggested_questions ?? [] }))
       .catch(() => null);
   }, [slug]);
 
@@ -150,10 +151,25 @@ export default function WidgetPage() {
           <div className="text-center text-gray-400 text-sm mt-8">
             <p className="text-2xl mb-2">👋</p>
             <p>Hi! Ask me anything.</p>
+            {branding.suggested_questions.length > 0 && (
+              <div className="mt-4 flex flex-col gap-2 items-center">
+                <p className="text-xs font-medium text-gray-500 mb-1">Suggested questions</p>
+                {branding.suggested_questions.map((q, i) => (
+                  <button
+                    key={i}
+                    onClick={() => { setInput(""); sendMessage(q); }}
+                    className="px-3 py-1.5 rounded-full border text-xs text-left hover:bg-gray-100 transition max-w-[85%]"
+                    style={{ borderColor: branding.primary_color, color: branding.primary_color }}
+                  >
+                    {q}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         )}
         {messages.map((msg, i) => (
-          <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+          <div key={i} className={`flex flex-col ${msg.role === "user" ? "items-end" : "items-start"}`}>
             <div
               className={`max-w-[80%] px-3 py-2 rounded-2xl text-sm leading-relaxed ${
                 msg.role === "user"
@@ -167,6 +183,21 @@ export default function WidgetPage() {
                 msg.content
               )}
             </div>
+            {msg.role === "assistant" && msg.suggested_questions && msg.suggested_questions.length > 0 && (
+              <div className="flex flex-col gap-1.5 mt-2 max-w-[80%]">
+                <p className="text-xs font-medium text-gray-500 mb-0.5">Suggested questions</p>
+                {msg.suggested_questions.map((q, j) => (
+                  <button
+                    key={j}
+                    onClick={() => sendMessage(q)}
+                    className="px-3 py-1.5 rounded-full border text-xs text-left hover:opacity-80 transition"
+                    style={{ borderColor: branding.primary_color, color: branding.primary_color }}
+                  >
+                    {q}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         ))}
         <div ref={bottomRef} />
