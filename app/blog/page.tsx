@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getPosts } from "@/lib/blog";
 import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 import { ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -62,16 +63,7 @@ export default function BlogPage() {
         </div>
       </main>
 
-      <footer className="border-t px-6 py-8 text-sm text-gray-400 mt-16">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-center">
-          <Link href="/" className="font-bold text-blue-600">Zebboy</Link>
-          <p>© {new Date().getFullYear()} Zebboy. All rights reserved.</p>
-          <div className="flex gap-4">
-            <Link href="/login" className="hover:text-gray-600">Sign in</Link>
-            <Link href="/signup" className="hover:text-gray-600">Sign up</Link>
-          </div>
-        </div>
-      </footer>
+      <Footer className="mt-16" />
     </div>
   );
 }

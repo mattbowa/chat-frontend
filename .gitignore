@@ -3,5 +3,7 @@
 .env.production
 node_modules/
 .next/
+.next-verify/
 out/
+*.tsbuildinfo
 .DS_Store

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { MessageSquare, FileText, Code, Zap, Shield, BarChart2 } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
   alternates: { canonical: "https://zebboy.com" },
@@ -44,7 +45,7 @@ export default function LandingPage() {
       <Navbar />
 
       {/* Hero */}
-      <section className="max-w-4xl mx-auto px-6 py-16 md:py-28 text-center">
+      <section className="max-w-4xl mx-auto px-6 pt-16 md:pt-24 pb-12 md:pb-14 text-center">
         <span className="inline-block bg-blue-50 text-blue-600 text-xs font-semibold px-3 py-1 rounded-full mb-6 uppercase tracking-wide">
           AI-powered customer support
         </span>
@@ -71,78 +72,13 @@ export default function LandingPage() {
             Sign in
           </Link>
         </div>
-        <p className="text-sm text-gray-400 mt-4">No credit card required · 100 messages free every month</p>
-      </section>
-
-      {/* Widget preview */}
-      <section className="max-w-3xl mx-auto px-6 pb-24">
-        <div className="relative bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl p-8 border border-blue-100 shadow-xl">
-
-          {/* Fake page content */}
-          <div className="space-y-3 mb-6">
-            <div className="h-4 bg-white rounded-full w-1/2 shadow-sm" />
-            <div className="h-3 bg-white/80 rounded-full w-3/4" />
-            <div className="h-3 bg-white/80 rounded-full w-2/3" />
-            <div className="h-3 bg-white/80 rounded-full w-5/6" />
-          </div>
-          <div className="grid grid-cols-3 gap-3 mb-6">
-            {[1,2,3].map(i => (
-              <div key={i} className="bg-white rounded-xl p-4 shadow-sm space-y-2">
-                <div className="h-3 bg-gray-100 rounded w-3/4" />
-                <div className="h-3 bg-gray-100 rounded w-1/2" />
-              </div>
-            ))}
-          </div>
-
-          {/* Chat widget */}
-          <div className="absolute bottom-6 right-6 flex flex-col items-end gap-2">
-            {/* Chat window */}
-            <div className="bg-white rounded-2xl shadow-2xl w-72 overflow-hidden border border-gray-100">
-              {/* Header */}
-              <div className="bg-blue-600 px-4 py-3 flex items-center gap-2">
-                <div className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center text-xs font-bold text-white">A</div>
-                <div>
-                  <p className="text-xs font-semibold text-white">AI Assistant</p>
-                  <p className="text-xs text-blue-200">Online</p>
-                </div>
-              </div>
-              {/* Messages */}
-              <div className="p-3 space-y-2 bg-gray-50">
-                <div className="flex justify-start">
-                  <div className="bg-white border text-gray-700 text-xs px-3 py-2 rounded-2xl rounded-bl-sm shadow-sm max-w-48">
-                    Hi! How can I help you today? 👋
-                  </div>
-                </div>
-                <div className="flex justify-end">
-                  <div className="bg-blue-600 text-white text-xs px-3 py-2 rounded-2xl rounded-br-sm max-w-40">
-                    What's your return policy?
-                  </div>
-                </div>
-                <div className="flex justify-start">
-                  <div className="bg-white border text-gray-700 text-xs px-3 py-2 rounded-2xl rounded-bl-sm shadow-sm max-w-48">
-                    We offer 30-day returns on all orders. No questions asked!
-                  </div>
-                </div>
-              </div>
-              {/* Input */}
-              <div className="px-3 py-2 border-t flex items-center gap-2 bg-white">
-                <div className="flex-1 bg-gray-100 rounded-full h-7 text-xs px-3 flex items-center text-gray-400">
-                  Type a message...
-                </div>
-                <div className="w-7 h-7 bg-blue-600 rounded-full flex items-center justify-center shrink-0">
-                  <MessageSquare size={12} className="text-white" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </section>
 
       {/* Features */}
-      <section id="features" className="bg-gray-50 py-24">
+      <section id="features" className="bg-gray-50 pt-16 pb-24">
         <div className="max-w-5xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center mb-4">Everything you need</h2>
-          <p className="text-center text-gray-500 mb-14">Set up in minutes.</p>
+          <h2 className="text-3xl font-bold text-center mb-3">Everything you need</h2>
+          <p className="text-center text-gray-500 mb-10">Set up in minutes.</p>
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
@@ -191,13 +127,21 @@ export default function LandingPage() {
               </div>
             ))}
           </div>
+          <div className="text-center mt-12">
+            <Link
+              href="/features"
+              className="inline-block border border-gray-200 bg-white text-gray-700 px-8 py-3 rounded-xl font-semibold text-sm hover:bg-gray-50 transition"
+            >
+              See all features →
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* How it works */}
-      <section id="how-it-works" className="py-24 max-w-4xl mx-auto px-6">
-        <h2 className="text-3xl font-bold text-center mb-4">Up and running in 3 steps</h2>
-        <p className="text-center text-gray-500 mb-14">No engineers required.</p>
+      <section id="how-it-works" className="pt-20 pb-14 max-w-4xl mx-auto px-6">
+        <h2 className="text-3xl font-bold text-center mb-3">Up and running in 3 steps</h2>
+        <p className="text-center text-gray-500 mb-10">No engineers required.</p>
         <div className="space-y-6">
           {[
             {
@@ -228,9 +172,8 @@ export default function LandingPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 text-center px-6">
-        <h2 className="text-3xl font-bold mb-4">Ready to add AI to your website?</h2>
-        <p className="text-gray-500 mb-8">Join for free. No credit card required.</p>
+      <section className="pt-16 pb-24 text-center px-6">
+        <h2 className="text-3xl font-bold mb-6">Ready to add AI to your website?</h2>
         <Link
           href="/signup"
           className="bg-blue-600 text-white px-10 py-4 rounded-xl font-semibold text-base hover:bg-blue-700 transition shadow-lg shadow-blue-200 inline-block"
@@ -239,18 +182,7 @@ export default function LandingPage() {
         </Link>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t px-6 py-8 text-sm text-gray-400">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-center">
-          <span className="font-bold text-blue-600">Zebboy</span>
-          <p>© {new Date().getFullYear()} Zebboy. All rights reserved.</p>
-          <div className="flex gap-4">
-            <Link href="/contact" className="hover:text-gray-600">Contact</Link>
-            <Link href="/login" className="hover:text-gray-600">Sign in</Link>
-            <Link href="/signup" className="hover:text-gray-600">Sign up</Link>
-          </div>
-        </div>
-      </footer>
+      <Footer />
 
     </div>
   );

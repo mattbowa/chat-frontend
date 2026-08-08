@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getPostBySlug, getAllSlugs } from "@/lib/blog";
 import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 import { ArrowLeft, Clock, Tag } from "lucide-react";
 
 interface Props {
@@ -140,16 +141,7 @@ export default async function BlogPostPage({ params }: Props) {
         </div>
       </main>
 
-      <footer className="border-t px-6 py-8 text-sm text-gray-400 mt-16">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-center">
-          <Link href="/" className="font-bold text-blue-600">Zebboy</Link>
-          <p>© {new Date().getFullYear()} Zebboy. All rights reserved.</p>
-          <div className="flex gap-4">
-            <Link href="/blog" className="hover:text-gray-600">Blog</Link>
-            <Link href="/signup" className="hover:text-gray-600">Sign up</Link>
-          </div>
-        </div>
-      </footer>
+      <Footer className="mt-16" />
     </div>
   );
 }

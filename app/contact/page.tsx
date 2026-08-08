@@ -4,6 +4,7 @@ import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Loader2, CheckCircle2 } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 import { submitContact } from "@/lib/api";
 import { toast } from "@/lib/toast";
 
@@ -103,9 +104,9 @@ function ContactForm() {
 
 export default function ContactPage() {
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <Navbar />
-      <div className="max-w-lg mx-auto py-16 px-4">
+      <div className="flex-1 w-full max-w-lg mx-auto py-16 px-4">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold mb-2">Get in touch</h1>
           <p className="text-gray-500 text-sm">
@@ -116,6 +117,7 @@ export default function ContactPage() {
           <ContactForm />
         </Suspense>
       </div>
+      <Footer />
     </div>
   );
 }
