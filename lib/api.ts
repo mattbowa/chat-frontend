@@ -44,13 +44,30 @@ export const updateSettings = (data: Partial<{
   max_response_tokens: number;
   fallback_message: string;
   suggested_questions: string[];
+  allowed_domains: string[];
   bot_name: string;
   primary_color: string;
   logo_url: string | null;
 }>) => api.patch("/settings", data);
 
+// Integrations
+export const listIntegrations = () => api.get("/integrations");
+
+export const upsertWebsite = (data: { site_url: string }) =>
+  api.put("/integrations/website", data);
+
+export const triggerSync = (id: string) => api.post(`/integrations/${id}/sync`);
+
+export const deleteIntegration = (id: string) => api.delete(`/integrations/${id}`);
+
 // Analytics
 export const getAnalytics = () => api.get("/analytics/usage");
+
+// Contact
+export const submitContact = (data: { name: string; email: string; message: string; source?: string }) =>
+  api.post("/public/contact", data);
+
+export const listContactSubmissions = () => api.get("/contact/submissions");
 
 // Chat sessions
 export const listSessions = () => api.get("/chat/sessions");

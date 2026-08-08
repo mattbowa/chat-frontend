@@ -42,7 +42,7 @@ You don't need everything on day one. Even a single FAQ document is enough to ge
 
 Go to [zebboy.com/signup](https://zebboy.com/signup) and create a free account. No credit card required.
 
-The free plan includes:
+Every account includes:
 - 100 conversations per month
 - Up to 10 documents
 - 1 chatbot widget
@@ -153,7 +153,7 @@ Not directly. The chatbot answers from your uploaded documents, not live order d
 
 ### How much does it cost?
 
-The free plan covers 100 conversations per month. The Pro plan is $29 per month and includes 2,000 conversations, unlimited documents, and multiple chatbots.
+Nothing. Zebboy is free and covers 100 conversations per month.
 
 ---
 

@@ -137,7 +137,7 @@ If you want to go the custom-trained route, here's the short version:
 4. **Customize your bot** with a name, welcome message, and tone
 5. **Embed it on your site** with one line of code, works on Shopify, Webflow, or any custom site
 
-The whole setup takes under 30 minutes. The free plan covers 100 conversations per month.
+The whole setup takes under 30 minutes. Zebboy is free, and covers 100 conversations per month.
 
 ---
 
@@ -161,7 +161,7 @@ You don't, not in the traditional sense. When a policy changes, upload the updat
 
 ### Is a trained chatbot expensive?
 
-Zebboy starts free at 100 conversations per month. The Pro plan is $29 per month for 2,000 conversations. Compare that to a customer support hire, or to enterprise chatbot platforms that charge hundreds a month.
+Zebboy is free to use, with 100 conversations per month included. Compare that to a customer support hire, or to enterprise chatbot platforms that charge hundreds a month.
 
 ---
 

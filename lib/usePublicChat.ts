@@ -9,7 +9,7 @@ export type Message = {
   suggested_questions?: string[];
 };
 
-export function usePublicChat(slug: string, sessionId: string, visitorEmail: string | null) {
+export function usePublicChat(slug: string, sessionId: string, visitorEmail: string | null, parentHost?: string | null) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [streaming, setStreaming] = useState(false);
 
@@ -22,8 +22,23 @@ export function usePublicChat(slug: string, sessionId: string, visitorEmail: str
       const res = await fetch(`${apiBase}/public/chat/${slug}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ session_id: sessionId, message: userMessage, visitor_email: visitorEmail }),
+        body: JSON.stringify({ session_id: sessionId, message: userMessage, visitor_email: visitorEmail, parent_host: parentHost ?? null }),
       });
+
+      // Errors (e.g. 429 when the monthly message limit is hit) come back as
+      // JSON, not SSE — surface the detail instead of streaming a blank reply.
+      if (!res.ok) {
+        let detail = "Something went wrong. Please try again.";
+        try {
+          const body = await res.json();
+          if (typeof body?.detail === "string") detail = body.detail;
+        } catch {
+          // non-JSON error body; keep the generic message
+        }
+        setMessages((prev) => [...prev, { role: "assistant", content: detail }]);
+        setStreaming(false);
+        return;
+      }
 
       const reader = res.body!.getReader();
       const decoder = new TextDecoder();
@@ -66,7 +81,7 @@ export function usePublicChat(slug: string, sessionId: string, visitorEmail: str
 
       setStreaming(false);
     },
-    [slug, sessionId, visitorEmail]
+    [slug, sessionId, visitorEmail, parentHost]
   );
 
   return { messages, streaming, sendMessage };

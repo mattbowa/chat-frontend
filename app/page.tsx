@@ -16,22 +16,13 @@ const jsonLd = {
   url: "https://zebboy.com",
   description:
     "AI chatbot builder that lets you upload your documents and embed a fully trained customer support bot on your website in minutes.",
-  offers: [
-    {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
-      name: "Free plan",
-      description: "100 messages/month, up to 10 documents, 1 chatbot widget",
-    },
-    {
-      "@type": "Offer",
-      price: "29",
-      priceCurrency: "USD",
-      name: "Pro plan",
-      description: "2,000 messages/month, unlimited documents, multiple chatbots",
-    },
-  ],
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "USD",
+    name: "Free",
+    description: "Free to use — get in touch if you need a higher message limit",
+  },
   featureList: [
     "Upload PDF, Word, and text documents",
     "AI answers grounded in your content",
@@ -151,7 +142,7 @@ export default function LandingPage() {
       <section id="features" className="bg-gray-50 py-24">
         <div className="max-w-5xl mx-auto px-6">
           <h2 className="text-3xl font-bold text-center mb-4">Everything you need</h2>
-          <p className="text-center text-gray-500 mb-14">Set up in minutes, not months.</p>
+          <p className="text-center text-gray-500 mb-14">Set up in minutes.</p>
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
@@ -236,70 +227,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Pricing */}
-      <section id="pricing" className="bg-gray-50 py-24">
-        <div className="max-w-3xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold mb-4">Simple pricing</h2>
-          <p className="text-gray-500 mb-14">Start free. Upgrade when you're ready.</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Free */}
-            <div className="bg-white rounded-2xl border p-8 text-left shadow-sm">
-              <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">Free</p>
-              <p className="text-4xl font-black mb-1">$0</p>
-              <p className="text-sm text-gray-400 mb-8">forever</p>
-              <ul className="space-y-3 text-sm text-gray-600 mb-8">
-                {[
-                  "100 messages / month",
-                  "Up to 10 documents",
-                  "1 chatbot widget",
-                  "Custom branding",
-                  "Analytics dashboard",
-                ].map((f) => (
-                  <li key={f} className="flex items-center gap-2">
-                    <span className="text-green-500 font-bold">✓</span> {f}
-                  </li>
-                ))}
-              </ul>
-              <Link
-                href="/signup"
-                className="block w-full text-center border border-blue-600 text-blue-600 py-2.5 rounded-lg font-medium hover:bg-blue-50 transition text-sm"
-              >
-                Get started free
-              </Link>
-            </div>
-
-            {/* Pro — coming soon */}
-            <div className="bg-blue-600 rounded-2xl p-8 text-left text-white relative overflow-hidden shadow-lg shadow-blue-200">
-              <div className="absolute top-4 right-4 bg-white/20 text-white text-xs px-2 py-0.5 rounded-full font-medium">
-                Coming soon
-              </div>
-              <p className="text-sm font-semibold text-blue-200 uppercase tracking-wide mb-2">Pro</p>
-              <p className="text-4xl font-black mb-1">$29</p>
-              <p className="text-sm text-blue-200 mb-8">per month</p>
-              <ul className="space-y-3 text-sm text-blue-100 mb-8">
-                {[
-                  "2,000 messages / month",
-                  "Unlimited documents",
-                  "Multiple chatbots",
-                  "Remove Zebboy branding",
-                  "Priority support",
-                ].map((f) => (
-                  <li key={f} className="flex items-center gap-2">
-                    <span className="text-white font-bold">✓</span> {f}
-                  </li>
-                ))}
-              </ul>
-              <button
-                disabled
-                className="block w-full text-center bg-white/20 text-white py-2.5 rounded-lg font-medium text-sm opacity-60 cursor-not-allowed"
-              >
-                Coming soon
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* CTA */}
       <section className="py-24 text-center px-6">
         <h2 className="text-3xl font-bold mb-4">Ready to add AI to your website?</h2>
@@ -318,6 +245,7 @@ export default function LandingPage() {
           <span className="font-bold text-blue-600">Zebboy</span>
           <p>© {new Date().getFullYear()} Zebboy. All rights reserved.</p>
           <div className="flex gap-4">
+            <Link href="/contact" className="hover:text-gray-600">Contact</Link>
             <Link href="/login" className="hover:text-gray-600">Sign in</Link>
             <Link href="/signup" className="hover:text-gray-600">Sign up</Link>
           </div>

@@ -3,14 +3,15 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { FileText, Settings, MessageSquare, Code, LogOut, BarChart2, MessagesSquare } from "lucide-react";
-import { getAnalytics } from "@/lib/api";
+import { FileText, Settings, MessageSquare, Code, LogOut, BarChart2, MessagesSquare, Plug, Inbox } from "lucide-react";
+import { getAnalytics, getMe } from "@/lib/api";
 
 const NAV = [
   { href: "/documents", label: "Documents", icon: FileText },
   { href: "/chat", label: "Chat Preview", icon: MessageSquare },
   { href: "/conversations", label: "Conversations", icon: MessagesSquare },
   { href: "/analytics", label: "Analytics", icon: BarChart2 },
+  { href: "/integrations", label: "Integrations", icon: Plug },
   { href: "/settings", label: "Settings", icon: Settings },
   { href: "/snippet", label: "Get Snippet", icon: Code },
 ];
@@ -19,12 +20,18 @@ export default function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
   const router = useRouter();
   const [usage, setUsage] = useState<{ used: number; limit: number } | null>(null);
+  const [isOwner, setIsOwner] = useState(false);
 
   useEffect(() => {
     getAnalytics()
-      .then(({ data }) => setUsage({ used: data.messages_this_month, limit: data.free_tier_limit }))
+      .then(({ data }) => setUsage({ used: data.messages_this_month, limit: data.message_limit }))
+      .catch(() => null);
+    getMe()
+      .then(({ data }) => setIsOwner(Boolean(data.is_owner)))
       .catch(() => null);
   }, []);
+
+  const nav = isOwner ? [...NAV, { href: "/inbox", label: "Inbox", icon: Inbox }] : NAV;
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -44,7 +51,7 @@ export default function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
       </div>
 
       <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
-        {NAV.map(({ href, label, icon: Icon }) => {
+        {nav.map(({ href, label, icon: Icon }) => {
           const active = pathname.startsWith(href);
           return (
             <Link
@@ -68,7 +75,7 @@ export default function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
         {usage && (
           <div>
             <div className="flex justify-between text-xs text-gray-500 mb-1">
-              <span>Free tier</span>
+              <span>Messages</span>
               <span>{usage.used}/{usage.limit} msgs</span>
             </div>
             <div className="w-full bg-gray-100 rounded-full h-1.5">

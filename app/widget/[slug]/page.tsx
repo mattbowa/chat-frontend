@@ -38,7 +38,16 @@ export default function WidgetPage() {
   }, []);
   const [emailInput, setEmailInput] = useState("");
   const [emailError, setEmailError] = useState("");
-  const { messages, streaming, sendMessage } = usePublicChat(slug, sessionId, visitorEmail);
+  // Embedding site's hostname: set by widget.js via ?host=, falling back to
+  // the referrer (direct iframe embeds) or our own hostname (direct preview).
+  const parentHost =
+    searchParams.get("host") ??
+    (typeof document !== "undefined" && document.referrer
+      ? new URL(document.referrer).hostname
+      : typeof window !== "undefined"
+        ? window.location.hostname
+        : null);
+  const { messages, streaming, sendMessage } = usePublicChat(slug, sessionId, visitorEmail, parentHost);
   const [input, setInput] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
   const [branding, setBranding] = useState<Branding>({ bot_name: "AI Assistant", primary_color: "#2563eb", logo_url: null, suggested_questions: [] });

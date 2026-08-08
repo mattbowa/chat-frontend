@@ -2,17 +2,20 @@
 
 import { useEffect, useState } from "react";
 import { getAnalytics } from "@/lib/api";
-import { MessageSquare, FileText, Zap } from "lucide-react";
+import { MessageSquare, FileText, Zap, HelpCircle } from "lucide-react";
 
 type Usage = {
-  plan: string;
   messages_this_month: number;
-  free_tier_limit: number;
+  message_limit: number;
   messages_remaining: number;
   total_messages: number;
   doc_count: number;
   daily_messages: { date: string; count: number }[];
   recent_questions: { question: string; at: string }[];
+  unanswered_questions: { question: string; count: number; at: string }[];
+  questions_30d: number;
+  fallback_30d: number;
+  answer_rate: number | null;
 };
 
 export default function AnalyticsPage() {
@@ -24,18 +27,19 @@ export default function AnalyticsPage() {
 
   if (!data) return <div className="p-10 text-gray-400 text-sm">Loading...</div>;
 
-  const usedPct = Math.min(100, Math.round((data.messages_this_month / data.free_tier_limit) * 100));
+  const usedPct = Math.min(100, Math.round((data.messages_this_month / data.message_limit) * 100));
 
   return (
     <div className="max-w-3xl mx-auto py-10 px-4 space-y-8">
       <h1 className="text-2xl font-bold">Analytics</h1>
 
       {/* Stat cards  */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-4 gap-4">
         {[
           { label: "Messages this month", value: data.messages_this_month, icon: MessageSquare, color: "text-blue-600" },
           { label: "Total messages", value: data.total_messages, icon: Zap, color: "text-purple-600" },
           { label: "Documents ready", value: data.doc_count, icon: FileText, color: "text-green-600" },
+          { label: "Answer rate (30d)", value: data.answer_rate != null ? `${data.answer_rate}%` : "—", icon: HelpCircle, color: "text-orange-600" },
         ].map(({ label, value, icon: Icon, color }) => (
           <div key={label} className="bg-white rounded-xl shadow p-5 flex items-center gap-4">
             <div className={`${color} bg-gray-50 rounded-lg p-2`}>
@@ -49,25 +53,21 @@ export default function AnalyticsPage() {
         ))}
       </div>
 
-      {/* Free tier usage bar */}
+      {/* Monthly message usage */}
       <div className="bg-white rounded-xl shadow p-6 space-y-3">
         <div className="flex justify-between items-center">
           <div>
-            <h2 className="font-semibold">Free tier usage</h2>
+            <h2 className="font-semibold">Monthly usage</h2>
             <p className="text-sm text-gray-500">
-              {data.messages_this_month} / {data.free_tier_limit} messages this month
+              {data.messages_this_month} / {data.message_limit} messages this month
             </p>
           </div>
-          <span className="text-xs bg-gray-100 px-2 py-1 rounded-full font-medium text-gray-600 uppercase">
-            {data.plan}
-          </span>
-
-          {/* ----------------------------------------------------------------
-              STRIPE (future) — replace the span above with an Upgrade button:
-              <a href="/billing" className="text-xs bg-blue-600 text-white px-3 py-1.5 rounded-full font-medium hover:bg-blue-700">
-                Upgrade
-              </a>
-          ---------------------------------------------------------------- */}
+          <a
+            href="/contact?source=message_limit"
+            className="text-xs bg-blue-600 text-white px-3 py-1.5 rounded-full font-medium hover:bg-blue-700"
+          >
+            Need more?
+          </a>
         </div>
 
         <div className="w-full bg-gray-100 rounded-full h-2.5">
@@ -100,6 +100,33 @@ export default function AnalyticsPage() {
               );
             })}
           </div>
+        </div>
+      )}
+
+      {/* Unanswered questions */}
+      {data.unanswered_questions.length > 0 && (
+        <div className="bg-white rounded-xl shadow p-6 space-y-3">
+          <div>
+            <h2 className="font-semibold">Unanswered questions (last 30 days)</h2>
+            <p className="text-sm text-gray-500">
+              Questions your bot couldn't answer from its knowledge base — upload documents or crawl pages that cover these.
+            </p>
+          </div>
+          <ul className="divide-y divide-gray-100">
+            {data.unanswered_questions.map((q, i) => (
+              <li key={i} className="py-2 flex justify-between items-start gap-4">
+                <p className="text-sm text-gray-700">{q.question}</p>
+                <div className="flex items-center gap-2 shrink-0">
+                  {q.count > 1 && (
+                    <span className="text-xs bg-orange-50 text-orange-600 px-2 py-0.5 rounded-full font-medium">
+                      ×{q.count}
+                    </span>
+                  )}
+                  <span className="text-xs text-gray-400">{q.at}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
 

@@ -11,6 +11,7 @@ type Settings = {
   max_response_tokens: number;
   fallback_message: string;
   suggested_questions: string[];
+  allowed_domains: string[];
   bot_name: string;
   primary_color: string;
   logo_url: string | null;
@@ -23,6 +24,15 @@ export default function SettingsPage() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [newQuestion, setNewQuestion] = useState("");
+  const [newDomain, setNewDomain] = useState("");
+
+  const addDomain = () => {
+    if (!settings) return;
+    const d = newDomain.trim().toLowerCase().replace(/^https?:\/\//, "").replace(/\/.*$/, "");
+    if (!d || settings.allowed_domains.includes(d)) return;
+    setSettings({ ...settings, allowed_domains: [...settings.allowed_domains, d] });
+    setNewDomain("");
+  };
 
   useEffect(() => {
     getSettings().then(({ data }) => setSettings(data));
@@ -206,6 +216,60 @@ export default function SettingsPage() {
             onChange={(e) => setSettings({ ...settings, max_response_tokens: parseInt(e.target.value) })}
             className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
+        </div>
+      </div>
+
+      {/* Security */}
+      <div className="bg-white rounded-xl shadow p-6 space-y-5">
+        <h2 className="font-semibold text-gray-800">Security</h2>
+
+        <div>
+          <label className="block text-sm font-medium mb-1">Allowed websites</label>
+          <p className="text-xs text-gray-400 mb-2">
+            Only these domains (and their subdomains) can embed your chat widget. Leave empty to allow any website.
+          </p>
+          <div className="flex flex-wrap gap-2 mb-2">
+            {settings.allowed_domains.map((d, i) => (
+              <span
+                key={i}
+                className="flex items-center gap-1 bg-gray-50 text-gray-700 text-xs px-2 py-1 rounded-full border border-gray-200 font-mono"
+              >
+                {d}
+                <button
+                  type="button"
+                  onClick={() => setSettings({
+                    ...settings,
+                    allowed_domains: settings.allowed_domains.filter((_, idx) => idx !== i),
+                  })}
+                  className="ml-0.5 text-gray-400 hover:text-red-500 font-bold"
+                >
+                  ×
+                </button>
+              </span>
+            ))}
+          </div>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={newDomain}
+              onChange={(e) => setNewDomain(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  addDomain();
+                }
+              }}
+              placeholder="yourcompany.com"
+              className="flex-1 border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <button
+              type="button"
+              onClick={addDomain}
+              className="bg-blue-100 text-blue-700 px-3 py-2 rounded-lg text-sm font-medium hover:bg-blue-200 transition"
+            >
+              Add
+            </button>
+          </div>
         </div>
       </div>
 

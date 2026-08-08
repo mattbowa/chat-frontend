@@ -7,7 +7,9 @@
   var src = script.getAttribute("src") || "";
   var baseUrl = src.substring(0, src.lastIndexOf("/")) || "http://localhost:3000";
 
-  var WIDGET_URL = baseUrl + "/widget/" + slug;
+  // Pass the embedding site's hostname so the backend can enforce the
+  // tenant's domain allowlist (the iframe's own origin is always ours).
+  var WIDGET_URL = baseUrl + "/widget/" + slug + "?host=" + encodeURIComponent(window.location.hostname);
   var BUBBLE_SIZE = 56;
   var WIDGET_W = 380;
   var WIDGET_H = 580;

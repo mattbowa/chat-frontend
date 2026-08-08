@@ -15,6 +15,7 @@ export default function Navbar() {
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-4">
           <Link href="/blog" className="text-sm text-gray-600 hover:text-gray-900">Blog</Link>
+          <Link href="/contact" className="text-sm text-gray-600 hover:text-gray-900">Contact</Link>
           <Link href="/login" className="text-sm text-gray-600 hover:text-gray-900">Sign in</Link>
           <Link
             href="/signup"
@@ -51,6 +52,13 @@ export default function Navbar() {
             className="text-sm text-gray-600 hover:text-gray-900 py-2"
           >
             Blog
+          </Link>
+          <Link
+            href="/contact"
+            onClick={() => setOpen(false)}
+            className="text-sm text-gray-600 hover:text-gray-900 py-2"
+          >
+            Contact
           </Link>
           <Link
             href="/login"
