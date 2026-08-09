@@ -5,7 +5,13 @@ import { useState, useCallback } from "react";
 export type Message = {
   role: "user" | "assistant";
   content: string;
-  sources?: Array<{ content: string; document_id: string; chunk_index: number }>;
+  sources?: Array<{
+    content: string;
+    document_id: string;
+    chunk_index: number;
+    /** "qa" for a curated answer, "document" for an uploaded/crawled chunk. */
+    kind?: "qa" | "document";
+  }>;
 };
 
 export function useChat(sessionId: string) {

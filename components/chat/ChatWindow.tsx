@@ -46,7 +46,11 @@ export default function ChatWindow({ sessionId, tenantName }: { sessionId: strin
                   <summary>{msg.sources.length} source(s)</summary>
                   <ul className="mt-1 space-y-1">
                     {msg.sources.map((s, si) => (
-                      <li key={si} className="truncate">doc:{s.document_id.slice(0, 8)} chunk:{s.chunk_index}</li>
+                      <li key={si} className="truncate">
+                        {s.kind === "qa"
+                          ? `curated: ${s.content.replace(/^Q: /, "").split("\n")[0]}`
+                          : `doc:${s.document_id.slice(0, 8)} chunk:${s.chunk_index}`}
+                      </li>
                     ))}
                   </ul>
                 </details>

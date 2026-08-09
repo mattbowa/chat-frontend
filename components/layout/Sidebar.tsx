@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { FileText, Settings, MessageSquare, Code, LogOut, BarChart2, MessagesSquare, Plug, Inbox } from "lucide-react";
+import { FileText, Settings, MessageSquare, Code, LogOut, BarChart2, MessagesSquare, Plug, Inbox, MessageCircleQuestion } from "lucide-react";
 import { getAnalytics, getMe } from "@/lib/api";
 
 const NAV = [
   { href: "/documents", label: "Documents", icon: FileText },
+  { href: "/answers", label: "Answers", icon: MessageCircleQuestion },
   { href: "/chat", label: "Chat Preview", icon: MessageSquare },
   { href: "/conversations", label: "Conversations", icon: MessagesSquare },
   { href: "/analytics", label: "Analytics", icon: BarChart2 },

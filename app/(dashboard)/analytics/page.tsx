@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { getAnalytics } from "@/lib/api";
-import { MessageSquare, FileText, Zap, HelpCircle } from "lucide-react";
+import { MessageSquare, FileText, Zap, HelpCircle, Check, Plus } from "lucide-react";
+import AnswerModal from "@/components/qa/AnswerModal";
 
 type Usage = {
   messages_this_month: number;
@@ -20,6 +21,12 @@ type Usage = {
 
 export default function AnalyticsPage() {
   const [data, setData] = useState<Usage | null>(null);
+  // Question currently open in the answer modal.
+  const [answering, setAnswering] = useState<string | null>(null);
+  // Questions answered during this visit. The unanswered report is built from
+  // historical messages, so a newly curated question keeps appearing until it
+  // ages out of the 30-day window — this marks them as handled in the meantime.
+  const [justAnswered, setJustAnswered] = useState<string[]>([]);
 
   useEffect(() => {
     getAnalytics().then(({ data }) => setData(data));
@@ -109,23 +116,43 @@ export default function AnalyticsPage() {
           <div>
             <h2 className="font-semibold">Unanswered questions (last 30 days)</h2>
             <p className="text-sm text-gray-500">
-              Questions your bot couldn't answer from its knowledge base — upload documents or crawl pages that cover these.
+              Questions your bot couldn&apos;t answer from its knowledge base. Write an
+              answer here, or upload documents that cover them.
             </p>
           </div>
           <ul className="divide-y divide-gray-100">
-            {data.unanswered_questions.map((q, i) => (
-              <li key={i} className="py-2 flex justify-between items-start gap-4">
-                <p className="text-sm text-gray-700">{q.question}</p>
-                <div className="flex items-center gap-2 shrink-0">
-                  {q.count > 1 && (
-                    <span className="text-xs bg-orange-50 text-orange-600 px-2 py-0.5 rounded-full font-medium">
-                      ×{q.count}
-                    </span>
-                  )}
-                  <span className="text-xs text-gray-400">{q.at}</span>
-                </div>
-              </li>
-            ))}
+            {data.unanswered_questions.map((q, i) => {
+              const done = justAnswered.includes(q.question);
+              return (
+                <li key={i} className="py-2 flex justify-between items-start gap-4">
+                  <p className={`text-sm ${done ? "text-gray-400 line-through" : "text-gray-700"}`}>
+                    {q.question}
+                  </p>
+                  <div className="flex items-center gap-2 shrink-0">
+                    {q.count > 1 && (
+                      <span className="text-xs bg-orange-50 text-orange-600 px-2 py-0.5 rounded-full font-medium">
+                        ×{q.count}
+                      </span>
+                    )}
+                    <span className="text-xs text-gray-400">{q.at}</span>
+                    {done ? (
+                      <span className="flex items-center gap-1 text-xs text-green-600 font-medium px-2 py-1">
+                        <Check size={13} />
+                        Answered
+                      </span>
+                    ) : (
+                      <button
+                        onClick={() => setAnswering(q.question)}
+                        className="flex items-center gap-1 text-xs font-medium text-blue-600 hover:bg-blue-50 px-2 py-1 rounded transition"
+                      >
+                        <Plus size={13} />
+                        Answer this
+                      </button>
+                    )}
+                  </div>
+                </li>
+              );
+            })}
           </ul>
         </div>
       )}
@@ -143,6 +170,14 @@ export default function AnalyticsPage() {
             ))}
           </ul>
         </div>
+      )}
+
+      {answering !== null && (
+        <AnswerModal
+          initialQuestion={answering}
+          onClose={() => setAnswering(null)}
+          onSaved={() => setJustAnswered((prev) => [...prev, answering])}
+        />
       )}
     </div>
   );

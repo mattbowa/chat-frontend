@@ -72,3 +72,22 @@ export const listContactSubmissions = () => api.get("/contact/submissions");
 // Chat sessions
 export const listSessions = () => api.get("/chat/sessions");
 export const getSession = (id: string) => api.get(`/chat/sessions/${id}`);
+
+// Curated answers (Q&A pairs)
+export type QAPair = {
+  id: string;
+  question: string;
+  answer: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export const listQAPairs = () => api.get<QAPair[]>("/qa");
+
+export const createQAPair = (data: { question: string; answer: string }) =>
+  api.post<QAPair>("/qa", data);
+
+export const updateQAPair = (id: string, data: { question: string; answer: string }) =>
+  api.patch<QAPair>(`/qa/${id}`, data);
+
+export const deleteQAPair = (id: string) => api.delete(`/qa/${id}`);
